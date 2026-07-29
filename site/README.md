@@ -12,8 +12,8 @@ Server-Funktionen im Ordner `functions/`. Dadurch:
 - **Alle Besucher sehen dieselben Daten** (Beamte, Notrufe, Fahndungen, …),
   gespeichert in Cloudflare KV statt getrennt pro Browser.      
 
-## Voraussetzungen
-                 
+## Voraussetzungen                          
+
 - Ein kostenloser Cloudflare-Account
 - Node.js installiert (für die `wrangler`-Kommandozeile)
 
