@@ -1,0 +1,1148 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Polizei Hessen – Dienststelle</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-0:#080f1c;
+    --bg-1:#0d1a2e;
+    --bg-2:#122238;
+    --line:rgba(148,171,201,0.14);
+    --line-strong:rgba(148,171,201,0.28);
+    --blue:#3E7FC4;
+    --blue-dim:#2A557F;
+    --red:#C8202E;
+    --red-dim:#7A1620;
+    --text-0:#EDF1F7;
+    --text-1:#A9B8CC;
+    --text-2:#6C7C93;
+    --green:#3FB37A;
+    --amber:#F5C77A;
+    --font-display:'Oswald',sans-serif;
+    --font-body:'Inter',sans-serif;
+    --font-mono:'IBM Plex Mono',monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg-0);
+    color:var(--text-0);
+    font-family:var(--font-body);
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+    background-image:
+      radial-gradient(circle at 15% 0%, rgba(62,127,196,0.10), transparent 45%),
+      radial-gradient(circle at 90% 15%, rgba(200,32,46,0.06), transparent 40%);
+  }
+  a{color:inherit;text-decoration:none;}
+  .wrap{max-width:1140px;margin:0 auto;padding:0 28px;}
+  ::selection{background:var(--blue-dim);color:#fff;}
+
+  .ribbon{
+    background:var(--bg-1);border-bottom:1px solid var(--line);
+    font-family:var(--font-mono);font-size:11.5px;letter-spacing:.03em;
+    color:var(--text-2);text-align:center;padding:6px 12px;
+  }
+  .ribbon b{color:var(--text-1);font-weight:500;}
+
+  header{
+    position:sticky;top:0;z-index:50;
+    background:rgba(8,15,28,0.9);backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav{display:flex;align-items:center;justify-content:space-between;height:74px;}
+  .brand{display:flex;align-items:center;gap:12px;}
+  .crest{width:34px;height:34px;flex:none;}
+  .brand-text{font-family:var(--font-display);font-weight:600;font-size:18px;letter-spacing:.03em;line-height:1.1;}
+  .brand-text span{display:block;font-family:var(--font-body);font-weight:400;font-size:10.5px;letter-spacing:.14em;color:var(--text-2);text-transform:uppercase;margin-top:2px;}
+  nav.links{display:flex;align-items:center;gap:18px;}
+  nav.links a{font-size:13px;color:var(--text-1);font-weight:500;transition:color .15s;white-space:nowrap;}
+  nav.links a:hover{color:var(--text-0);}
+  .nav-cta{
+    font-size:13.5px;font-weight:500;color:var(--text-0);
+    border:1px solid var(--line-strong);border-radius:6px;
+    padding:9px 16px;transition:border-color .15s,background .15s;
+  }
+  .nav-cta:hover{border-color:var(--blue);background:rgba(62,127,196,0.08);}
+  .discord-btn{display:inline-flex;align-items:center;gap:8px;background:#5865F2;border-color:#5865F2;color:#fff;flex:none;}
+  .discord-btn:hover{background:#4954d4;border-color:#4954d4;}
+  .notruf-link{color:var(--red)!important;font-weight:600!important;}
+  @media (max-width:980px){.links{display:none;}}
+
+  .hero{position:relative;padding:96px 0 72px;border-bottom:1px solid var(--line);overflow:hidden;}
+  .hero::before{
+    content:"";position:absolute;inset:0;
+    background:repeating-linear-gradient(-45deg, rgba(200,32,46,0.035) 0 2px, transparent 2px 34px);
+    pointer-events:none;
+  }
+  .status-pill{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:var(--font-mono);font-size:12px;color:var(--green);
+    border:1px solid rgba(63,179,122,0.35);background:rgba(63,179,122,0.08);
+    padding:6px 12px;border-radius:20px;margin-bottom:28px;
+  }
+  .status-dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 0 0 rgba(63,179,122,.6);animation:pulse 2s infinite;}
+  @keyframes pulse{
+    0%{box-shadow:0 0 0 0 rgba(63,179,122,.55);}
+    70%{box-shadow:0 0 0 7px rgba(63,179,122,0);}
+    100%{box-shadow:0 0 0 0 rgba(63,179,122,0);}
+  }
+  .hero h1{font-family:var(--font-display);font-weight:700;font-size:clamp(46px,7vw,84px);letter-spacing:.01em;line-height:.98;color:var(--text-0);}
+  .hero h1 em{font-style:normal;color:var(--blue);}
+  .hero .sub{font-family:var(--font-display);font-weight:500;font-size:19px;letter-spacing:.06em;color:var(--text-1);text-transform:uppercase;margin-top:10px;}
+  .hero p.lead{max-width:560px;color:var(--text-1);font-size:15.5px;margin-top:22px;}
+  .hero-ctas{display:flex;gap:14px;margin-top:34px;flex-wrap:wrap;}
+  .btn{font-size:14px;font-weight:600;padding:13px 22px;border-radius:6px;display:inline-flex;align-items:center;gap:8px;transition:all .15s;font-family:var(--font-body);cursor:pointer;border:none;}
+  .btn-primary{background:var(--blue);color:#fff;}
+  .btn-primary:hover{background:#4a8fd6;}
+  .btn-ghost{border:1px solid var(--line-strong);color:var(--text-0);background:none;}
+  .btn-ghost:hover{border-color:var(--blue);background:rgba(62,127,196,0.08);}
+  .btn-alert{background:var(--red);color:#fff;}
+  .btn-alert:hover{background:#e0293a;}
+  .btn-sm{padding:7px 13px;font-size:12.5px;border-radius:5px;}
+
+  .stat-strip{margin-top:66px;display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:10px;overflow:hidden;background:rgba(255,255,255,0.015);}
+  .stat{padding:22px 26px;border-right:1px solid var(--line);}
+  .stat:last-child{border-right:none;}
+  .stat b{display:block;font-family:var(--font-display);font-size:30px;font-weight:600;color:var(--text-0);}
+  .stat span{font-size:12px;color:var(--text-2);letter-spacing:.03em;}
+  @media (max-width:760px){.stat-strip{grid-template-columns:repeat(2,1fr);} .stat:nth-child(2){border-right:none;}}
+
+  .discord-status{margin-top:18px;font-family:var(--font-mono);font-size:12.5px;color:var(--text-2);display:flex;align-items:center;gap:8px;}
+  .discord-status b{color:#8992F5;font-weight:500;}
+
+  section{padding:80px 0;border-bottom:1px solid var(--line);}
+  .eyebrow{font-family:var(--font-mono);font-size:12px;color:var(--blue);letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px;display:block;}
+  .sec-head h2{font-family:var(--font-display);font-weight:600;font-size:clamp(26px,3.2vw,36px);}
+  .sec-head p{color:var(--text-1);max-width:560px;margin-top:12px;font-size:15px;}
+  .sec-head{margin-bottom:40px;display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;}
+  .sec-head-text{flex:1;min-width:260px;}
+
+  .lookup-panel{background:var(--bg-1);border:1px solid var(--line);border-radius:12px;padding:32px;display:grid;grid-template-columns:1fr;gap:24px;}
+  .lookup-form{display:flex;gap:10px;}
+  .lookup-form input{flex:1;background:var(--bg-0);border:1px solid var(--line-strong);border-radius:6px;padding:14px 16px;color:var(--text-0);font-size:14.5px;font-family:var(--font-mono);}
+  .lookup-form input:focus{outline:none;border-color:var(--blue);}
+  .lookup-form input::placeholder{color:var(--text-2);}
+  .lookup-form button{background:var(--blue);color:#fff;border:none;border-radius:6px;padding:0 26px;font-weight:600;font-size:14px;cursor:pointer;transition:background .15s;}
+  .lookup-form button:hover{background:#4a8fd6;}
+  .lookup-hint{font-size:12.5px;color:var(--text-2);margin-top:10px;font-family:var(--font-mono);}
+
+  .id-card{display:none;border:1px solid var(--line-strong);border-radius:10px;overflow:hidden;background:linear-gradient(135deg,#0f2038,#0a1729);animation:reveal .35s ease;}
+  .id-card.show{display:grid;grid-template-columns:110px 1fr;}
+  @keyframes reveal{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+  .id-photo{background:var(--bg-2);display:flex;align-items:center;justify-content:center;border-right:1px solid var(--line);}
+  .id-photo svg{width:46px;height:46px;color:var(--text-2);}
+  .id-body{padding:20px 24px;}
+  .id-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px;}
+  .id-badge-label{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.1em;color:var(--text-2);text-transform:uppercase;}
+  .id-status{font-family:var(--font-mono);font-size:11px;color:var(--green);border:1px solid rgba(63,179,122,.35);background:rgba(63,179,122,.08);padding:3px 9px;border-radius:14px;}
+  .id-name{font-family:var(--font-display);font-size:22px;font-weight:600;}
+  .id-rank{color:var(--blue);font-size:13.5px;font-weight:500;margin-top:2px;}
+  .id-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px 24px;margin-top:16px;}
+  .id-grid div span{display:block;font-size:10.5px;color:var(--text-2);letter-spacing:.06em;text-transform:uppercase;margin-bottom:3px;}
+  .id-grid div b{font-family:var(--font-mono);font-size:14px;font-weight:500;}
+  .id-empty{display:none;border:1px dashed var(--line-strong);border-radius:10px;padding:26px;text-align:center;color:var(--text-2);font-size:13.5px;font-family:var(--font-mono);}
+  .id-empty.show{display:block;}
+
+  .request-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+  .field{display:flex;flex-direction:column;gap:7px;}
+  .field.wide{grid-column:1/-1;}
+  .field label{font-size:12px;color:var(--text-2);letter-spacing:.04em;text-transform:uppercase;}
+  .field input,.field select,.field textarea{background:var(--bg-0);border:1px solid var(--line-strong);border-radius:6px;padding:12px 14px;color:var(--text-0);font-size:14px;font-family:var(--font-body);resize:vertical;}
+  .field textarea{min-height:80px;font-family:var(--font-body);}
+  .field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--blue);}
+  .field-btn{justify-content:flex-end;}
+  @media (max-width:700px){.request-grid{grid-template-columns:1fr;}}
+
+  .result-card{margin-top:8px;border:1px solid rgba(63,179,122,.35);background:rgba(63,179,122,.06);border-radius:8px;padding:16px 18px;font-size:14px;}
+  .result-card b{font-family:var(--font-mono);color:var(--green);}
+  .result-card.pending{border-color:rgba(245,199,122,.35);background:rgba(245,199,122,.08);}
+  .result-card.pending b{color:var(--amber);}
+
+  .log-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px;flex-wrap:wrap;gap:8px;}
+  .prio-1{color:#F0999A;background:rgba(200,32,46,.12);}
+  .prio-2{color:var(--amber);background:rgba(200,150,32,.12);}
+  .prio-3{color:var(--text-2);background:rgba(148,171,201,.1);}
+  .prio-badge,.stufe-badge{font-family:var(--font-mono);font-size:10.5px;padding:3px 8px;border-radius:10px;letter-spacing:.03em;display:inline-block;}
+  .alert-row{grid-template-columns:70px 1fr 1fr 90px 100px 40px!important;}
+  .status-toggle{font-family:var(--font-mono);font-size:11px;border:1px solid var(--line-strong);border-radius:5px;padding:4px 8px;background:none;color:var(--text-1);cursor:pointer;}
+  .status-toggle.open{color:var(--red);border-color:rgba(200,32,46,.4);}
+  .status-toggle.progress{color:var(--amber);border-color:rgba(245,199,122,.4);}
+  .status-toggle.done{color:var(--green);border-color:rgba(63,179,122,.4);}
+  .log-empty{padding:24px;text-align:center;color:var(--text-2);font-size:13.5px;font-family:var(--font-mono);border:1px dashed var(--line-strong);border-radius:8px;}
+
+  .notruf-panel{border-color:rgba(200,32,46,0.3);margin-bottom:36px;}
+
+  .unit-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+  @media (max-width:820px){.unit-grid{grid-template-columns:repeat(2,1fr);}}
+  @media (max-width:520px){.unit-grid{grid-template-columns:1fr;}}
+  .unit-card{border:1px solid var(--line);border-radius:10px;padding:22px;background:var(--bg-1);transition:border-color .15s,transform .15s;}
+  .unit-card:hover{border-color:var(--blue);transform:translateY(-2px);}
+  .unit-icon{width:38px;height:38px;border-radius:8px;background:rgba(62,127,196,0.12);display:flex;align-items:center;justify-content:center;margin-bottom:14px;color:var(--blue);}
+  .unit-card.special .unit-icon{background:rgba(200,32,46,0.12);color:var(--red);}
+  .unit-card h4{font-family:var(--font-display);font-size:16px;font-weight:500;margin-bottom:6px;}
+  .unit-card p{font-size:13px;color:var(--text-2);}
+  .unit-tag{display:inline-block;margin-top:12px;font-family:var(--font-mono);font-size:10.5px;color:var(--text-2);letter-spacing:.06em;text-transform:uppercase;}
+
+  .webhook-box{border-bottom:1px solid var(--line);padding-bottom:22px;margin-bottom:22px;display:flex;flex-direction:column;gap:8px;}
+  .webhook-box input{flex:1;background:var(--bg-0);border:1px solid var(--line-strong);border-radius:6px;padding:12px 14px;color:var(--text-0);font-family:var(--font-mono);font-size:13px;}
+  .webhook-box input:focus{outline:none;border-color:var(--blue);}
+
+  .admin-table{border:1px solid var(--line);border-radius:8px;overflow:hidden;}
+  .admin-row{display:grid;grid-template-columns:1fr 1fr 1fr 90px 40px;gap:10px;align-items:center;padding:12px 16px;border-bottom:1px solid var(--line);font-size:13px;background:var(--bg-1);}
+  .admin-row:last-child{border-bottom:none;}
+  .admin-row.header{color:var(--text-2);font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.05em;background:var(--bg-2);}
+  .admin-row b{font-family:var(--font-mono);font-weight:500;}
+  .del-btn{background:none;border:1px solid var(--line-strong);color:var(--text-2);border-radius:5px;width:28px;height:28px;cursor:pointer;font-size:14px;transition:all .15s;}
+  .del-btn:hover{border-color:var(--red);color:var(--red);}
+  @media (max-width:700px){.admin-row{grid-template-columns:1fr 1fr;font-size:12px;} .admin-row.header{display:none;}}
+
+  .admin-block{border-top:1px solid var(--line);padding-top:28px;margin-top:28px;}
+  .admin-block:first-child{border-top:none;padding-top:0;margin-top:0;}
+  .admin-block-title{font-family:var(--font-display);font-size:16px;font-weight:500;margin-bottom:16px;}
+
+  .app-row{grid-template-columns:1fr 1fr 1fr 90px 90px 90px!important;}
+  .app-approve{color:var(--green);border-color:rgba(63,179,122,.4);}
+  .app-reject{color:var(--red);border-color:rgba(200,32,46,.4);}
+
+  .rank-list{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:12px;overflow:hidden;}
+  .rank-row{display:grid;grid-template-columns:64px 1fr 200px;align-items:center;padding:18px 26px;border-bottom:1px solid var(--line);background:var(--bg-1);transition:background .15s;}
+  .rank-row:last-child{border-bottom:none;}
+  .rank-row:hover{background:var(--bg-2);}
+  .rank-tier{font-family:var(--font-mono);font-size:12px;color:var(--text-2);}
+  .rank-name{font-family:var(--font-display);font-size:17px;font-weight:500;}
+  .rank-name span{display:block;font-family:var(--font-body);font-size:12.5px;color:var(--text-2);font-weight:400;margin-top:2px;}
+  .rank-bars{display:flex;gap:4px;justify-self:end;}
+  .rank-bar{width:6px;height:18px;border-radius:1px;background:var(--line-strong);}
+  .rank-bar.on{background:var(--blue);}
+
+  .about-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:56px;align-items:start;}
+  .about-grid p{color:var(--text-1);font-size:15px;margin-bottom:16px;}
+  .about-grid p b{color:var(--text-0);}
+  .divisions{display:flex;flex-direction:column;gap:2px;}
+  .division{border:1px solid var(--line);border-radius:8px;padding:16px 18px;background:var(--bg-1);}
+  .division + .division{margin-top:10px;}
+  .division h4{font-family:var(--font-display);font-size:15px;font-weight:500;margin-bottom:4px;}
+  .division p{font-size:13px;color:var(--text-2);margin:0;}
+  @media (max-width:820px){.about-grid{grid-template-columns:1fr;}}
+
+  .wanted-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:36px;}
+  @media (max-width:820px){.wanted-grid{grid-template-columns:repeat(2,1fr);}}
+  @media (max-width:560px){.wanted-grid{grid-template-columns:1fr;}}
+  .wanted-card{border:1px solid var(--line);border-radius:10px;padding:20px;background:var(--bg-1);}
+  .wanted-card.gefasst{opacity:.5;}
+  .stufe-niedrig{color:var(--text-2);background:rgba(148,171,201,.12);}
+  .stufe-mittel{color:var(--amber);background:rgba(245,199,122,.12);}
+  .stufe-hoch{color:#F0999A;background:rgba(200,32,46,.14);}
+  .wanted-card h4{font-family:var(--font-display);font-size:16px;margin:10px 0 4px;}
+  .wanted-card p{font-size:13px;color:var(--text-2);}
+  .wanted-empty{padding:24px;text-align:center;color:var(--text-2);font-size:13.5px;font-family:var(--font-mono);border:1px dashed var(--line-strong);border-radius:8px;grid-column:1/-1;}
+
+  .catalog-table{border:1px solid var(--line);border-radius:8px;overflow:hidden;}
+  .cat-row{display:grid;grid-template-columns:2fr 1fr 1fr;gap:10px;padding:12px 16px;border-bottom:1px solid var(--line);font-size:13.5px;background:var(--bg-1);}
+  .cat-row:last-child{border-bottom:none;}
+  .cat-row.header{color:var(--text-2);font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.05em;background:var(--bg-2);}
+  .cat-row b{font-family:var(--font-mono);}
+
+  .record-search-result{border:1px solid var(--line);border-radius:10px;overflow:hidden;}
+  .record-entry{padding:14px 20px;border-bottom:1px solid var(--line);font-size:13.5px;background:var(--bg-1);display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;}
+  .record-entry:last-child{border-bottom:none;}
+  .record-entry b{font-family:var(--font-mono);color:var(--red);}
+  .record-meta{font-family:var(--font-mono);font-size:11.5px;color:var(--text-2);}
+
+  .plan-table{width:100%;border-collapse:collapse;border:1px solid var(--line);border-radius:10px;overflow:hidden;}
+  .plan-table th,.plan-table td{border:1px solid var(--line);padding:10px 12px;font-size:12.5px;text-align:left;}
+  .plan-table th{background:var(--bg-2);font-family:var(--font-mono);text-transform:uppercase;letter-spacing:.04em;color:var(--text-2);font-weight:400;}
+  .plan-table td{background:var(--bg-1);}
+  .plan-table input{width:100%;background:transparent;border:none;color:var(--text-0);font-family:var(--font-mono);font-size:12.5px;}
+  .plan-table input:focus{outline:none;}
+  .plan-wrap{overflow-x:auto;}
+
+  .press-list{display:flex;flex-direction:column;gap:14px;}
+  .press-card{border:1px solid var(--line);border-radius:10px;padding:20px 22px;background:var(--bg-1);}
+  .press-date{font-family:var(--font-mono);font-size:11px;color:var(--text-2);margin-bottom:6px;}
+  .press-card h4{font-family:var(--font-display);font-size:17px;margin-bottom:6px;}
+  .press-card p{font-size:13.5px;color:var(--text-1);}
+
+  footer{padding:40px 0 32px;}
+  .foot-row{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;}
+  .foot-brand{display:flex;align-items:center;gap:10px;font-family:var(--font-display);font-size:14px;color:var(--text-1);}
+  .foot-links{display:flex;gap:18px;font-size:13px;color:var(--text-2);flex-wrap:wrap;}
+  .foot-note{font-size:11.5px;color:var(--text-2);margin-top:22px;font-family:var(--font-mono);line-height:1.7;border-top:1px solid var(--line);padding-top:20px;}
+</style>
+</head>
+<body>
+
+<div class="ribbon">DIES IST EIN <b>ROLLENSPIEL-PROJEKT</b> · KEINE OFFIZIELLE WEBSITE DER HESSISCHEN LANDESPOLIZEI</div>
+
+<header>
+  <div class="wrap nav">
+    <div class="brand">
+      <svg class="crest" viewBox="0 0 48 48" fill="none">
+        <path d="M24 3 L42 10 V22 C42 34 34.5 41.5 24 45 C13.5 41.5 6 34 6 22 V10 Z" fill="#122238" stroke="#3E7FC4" stroke-width="1.6"/>
+        <path d="M24 8 L37 13 V22 C37 31 31.5 37 24 40 C16.5 37 11 31 11 22 V13 Z" fill="#0d1a2e" stroke="#C8202E" stroke-width="1"/>
+        <path d="M24 15 L24 33 M17 20 L31 20" stroke="#EDF1F7" stroke-width="2" stroke-linecap="round"/>
+        <path d="M17 20 C17 26 20 30 24 33 C28 30 31 26 31 20" stroke="#3E7FC4" stroke-width="1.4" fill="none"/>
+      </svg>
+      <div class="brand-text">Polizei Hessen<span>Präsidium · Landesdienst</span></div>
+    </div>
+    <nav class="links">
+      <a href="#notruf" class="notruf-link">Notruf</a>
+      <a href="#fahndung">Fahndung</a>
+      <a href="#buerger">Bürgerakte</a>
+      <a href="#dienstplan">Dienstplan</a>
+      <a href="#presse">Presse</a>
+      <a href="#bewerbung">Bewerbung</a>
+      <a href="#admin">Admin</a>
+      <a class="nav-cta discord-btn" href="https://discord.gg/mXn6MVzyQk" target="_blank" rel="noopener">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.3 4.9A19.8 19.8 0 0 0 15.6 3.4c-.2.4-.5.9-.7 1.3a18.3 18.3 0 0 0-5.6 0c-.2-.4-.4-.9-.7-1.3A19.7 19.7 0 0 0 3.9 4.9C1.2 8.9.5 12.8.8 16.7a19.9 19.9 0 0 0 6 3c.5-.6.9-1.3 1.3-2a13 13 0 0 1-2-1c.2-.1.3-.3.5-.4a14.2 14.2 0 0 0 12 0l.5.4a13 13 0 0 1-2 1c.4.7.8 1.4 1.3 2a19.8 19.8 0 0 0 6-3c.4-4.5-.7-8.4-3.1-11.8ZM8.7 14.3c-1 0-1.8-.9-1.8-2s.8-2 1.8-2 1.8.9 1.8 2-.8 2-1.8 2Zm6.6 0c-1 0-1.8-.9-1.8-2s.8-2 1.8-2 1.8.9 1.8 2-.8 2-1.8 2Z"/></svg>
+        Discord
+      </a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="status-pill"><span class="status-dot"></span>Funkverkehr aktiv — Dienststelle im Einsatz</div>
+    <h1>Polizei<br><em>Hessen</em></h1>
+    <div class="sub">Präsidium für Recht &amp; Ordnung</div>
+    <p class="lead">Die zentrale Anlaufstelle unserer Rollenspiel-Polizeibehörde: Notrufe, Fahndungen, Dienstplan, Bewerbungen und die vollständige Beamten-Datenbank.</p>
+    <div class="hero-ctas">
+      <a href="#bewerbung" class="btn btn-primary">Jetzt bewerben</a>
+      <a href="#fahndung" class="btn btn-ghost">Fahndungsliste ansehen</a>
+    </div>
+    <div id="discordStatus" class="discord-status"></div>
+
+    <div class="stat-strip">
+      <div class="stat"><b id="c1">0</b><span>Aktive Beamte</span></div>
+      <div class="stat"><b id="c2">0</b><span>Offene Fahndungen</span></div>
+      <div class="stat"><b id="c3">0</b><span>Einsätze gesamt</span></div>
+      <div class="stat"><b id="c4">0</b><span>Offene Einsätze</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="notruf">
+  <div class="wrap">
+    <div class="sec-head"><div class="sec-head-text">
+      <span class="eyebrow" style="color:var(--red);">Alarmierung</span>
+      <h2>Notruf auslösen</h2>
+      <p>Melde einen Einsatz an die Zentrale. Der Alarm erscheint sofort im Einsatzprotokoll — bei verknüpftem Discord-Webhook zusätzlich im Einsatzkanal.</p>
+    </div></div>
+
+    <div class="lookup-panel notruf-panel">
+      <form class="request-grid" onsubmit="return submitAlert(event)">
+        <div class="field"><label>Ort / Adresse</label><input id="alOrt" type="text" placeholder="z. B. Hauptbahnhof Frankfurt" required></div>
+        <div class="field"><label>Art des Notrufs</label>
+          <select id="alArt">
+            <option>Überfall</option><option>Verkehrsunfall</option><option>Gefahr in Verzug</option>
+            <option>Geiselnahme</option><option>Ruhestörung</option><option>Sonstiges</option>
+          </select>
+        </div>
+        <div class="field"><label>Priorität</label>
+          <select id="alPrio">
+            <option value="1">Stufe 1 — kritisch</option>
+            <option value="2" selected>Stufe 2 — dringend</option>
+            <option value="3">Stufe 3 — normal</option>
+          </select>
+        </div>
+        <div class="field"><label>Gemeldet von</label><input id="alMelder" type="text" placeholder="Name oder Dienstnummer"></div>
+        <div class="field wide"><label>Beschreibung</label><input id="alBeschreibung" type="text" placeholder="Kurze Lagebeschreibung"></div>
+        <div class="field field-btn wide"><button type="submit" class="btn btn-alert" style="width:100%;justify-content:center;">Alarm auslösen</button></div>
+      </form>
+      <div id="alertResult"></div>
+    </div>
+
+    <div class="log-head">
+      <span class="eyebrow" style="margin:0;">Einsatzprotokoll</span>
+      <span class="lookup-hint" id="webhookState" style="margin:0;">Discord-Webhook nicht verbunden</span>
+    </div>
+    <div class="admin-table" id="alertLog"></div>
+  </div>
+</section>
+
+<section id="fahndung">
+  <div class="wrap">
+    <div class="sec-head"><div class="sec-head-text">
+      <span class="eyebrow">Öffentlichkeit</span>
+      <h2>Fahndungsliste</h2>
+      <p>Aktuell gesuchte Personen. Angaben ohne Gewähr, ausschließlich für Rollenspiel-Zwecke.</p>
+    </div></div>
+    <div class="wanted-grid" id="wantedGrid"></div>
+
+    <div class="sec-head" style="margin-top:56px;"><div class="sec-head-text">
+      <span class="eyebrow">Referenz</span>
+      <h2>Strafenkatalog</h2>
+      <p>Einheitliche Strafen für einheitliches Rollenspiel — gilt für alle Einheiten.</p>
+    </div></div>
+    <div class="catalog-table" id="catalogTable"></div>
+  </div>
+</section>
+
+<section id="buerger">
+  <div class="wrap">
+    <div class="sec-head"><div class="sec-head-text">
+      <span class="eyebrow">Datenbank</span>
+      <h2>Bürgerakte / Vorstrafenregister</h2>
+      <p>Suche nach einer Person, um bisherige Einträge und Vorstrafen einzusehen.</p>
+    </div></div>
+    <div class="lookup-panel">
+      <div class="lookup-form">
+        <input id="citizenInput" type="text" placeholder="Name der gesuchten Person" autocomplete="off">
+        <button onclick="runCitizenLookup()">Suchen</button>
+      </div>
+      <div id="citizenResult"></div>
+    </div>
+  </div>
+</section>
+
+<section id="lookup">
+  <div class="wrap">
+    <div class="sec-head"><div class="sec-head-text">
+      <span class="eyebrow">Datenbank</span>
+      <h2>Dienstnummer nachschlagen</h2>
+      <p>Gib einen Namen, eine Dienstnummer oder einen Discord-Namen ein, um den Status eines Beamten zu prüfen.</p>
+    </div></div>
+    <div class="lookup-panel">
+      <div>
+        <div class="lookup-form">
+          <input id="lookupInput" type="text" placeholder="Name, Dienstnummer oder Discord-Name" autocomplete="off">
+          <button onclick="runLookup()">Suchen</button>
+        </div>
+        <div class="lookup-hint">Testdaten: Weber · Klein · Baumann · Sürmeli · HE-1042 · HE-2210 · HE-3305</div>
+      </div>
+      <div id="idCard" class="id-card">
+        <div class="id-photo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg></div>
+        <div class="id-body">
+          <div class="id-top">
+            <div>
+              <div class="id-badge-label">Dienstausweis</div>
+              <div class="id-name" id="oName">—</div>
+              <div class="id-rank" id="oRank">—</div>
+            </div>
+            <div class="id-status" id="oStatus">im Dienst</div>
+          </div>
+          <div class="id-grid">
+            <div><span>Dienstnummer</span><b id="oBadge">—</b></div>
+            <div><span>Einheit</span><b id="oUnit">—</b></div>
+            <div><span>Im Dienst seit</span><b id="oSince">—</b></div>
+            <div><span>Discord</span><b id="oCall">—</b></div>
+          </div>
+        </div>
+      </div>
+      <div id="idEmpty" class="id-empty show">Noch keine Suche durchgeführt. Gib oben einen Namen oder eine Dienstnummer ein.</div>
+    </div>
+  </div>
+</section>
+
+<section id="units">
+  <div class="wrap">
+    <div class="sec-head"><div class="sec-head-text">
+      <span class="eyebrow">Spezialeinheiten</span>
+      <h2>Einheiten der Polizei Hessen</h2>
+      <p>Von der regulären Landespolizei bis zu spezialisierten Eingreiftruppen — jede Einheit hat ihren eigenen Aufgabenbereich.</p>
+    </div></div>
+    <div class="unit-grid" id="unitGrid"></div>
+  </div>
+</section>
+
+<section id="ranks">
+  <div class="wrap">
+    <div class="sec-head"><div class="sec-head-text">
+      <span class="eyebrow">Hierarchie</span>
+      <h2>Dienstgrade</h2>
+      <p>Die offizielle Rangordnung der Polizei Hessen, vom Präsidium bis zum Streifendienst.</p>
+    </div></div>
+    <div class="rank-list" id="rankList"></div>
+  </div>
+</section>
+
+<section id="dienstplan">
+  <div class="wrap">
+    <div class="sec-head"><div class="sec-head-text">
+      <span class="eyebrow">Einsatzplanung</span>
+      <h2>Dienstplan</h2>
+      <p>Wochenübersicht der Schichten. Wird von der Präsidiumsleitung im Admin-Bereich gepflegt.</p>
+    </div></div>
+    <div class="plan-wrap"><table class="plan-table" id="planTable"></table></div>
+  </div>
+</section>
+
+<section id="presse">
+  <div class="wrap">
+    <div class="sec-head"><div class="sec-head-text">
+      <span class="eyebrow">Öffentlichkeitsarbeit</span>
+      <h2>Pressemitteilungen</h2>
+      <p>Aktuelle Meldungen der Polizei Hessen an die Bürger.</p>
+    </div></div>
+    <div class="press-list" id="pressList"></div>
+  </div>
+</section>
+
+<section id="bewerbung">
+  <div class="wrap">
+    <div class="sec-head"><div class="sec-head-text">
+      <span class="eyebrow">Neuaufnahme</span>
+      <h2>Bewerbung einreichen</h2>
+      <p>Deine Bewerbung wird von der Präsidiumsleitung geprüft. Bei Annahme erhältst du deine Dienstnummer und deinen Dienstausweis.</p>
+    </div></div>
+    <div class="lookup-panel">
+      <form id="applicationForm" class="request-grid" onsubmit="return submitApplication(event)">
+        <div class="field"><label>Name</label><input id="appName" type="text" placeholder="Vorname Nachname" required></div>
+        <div class="field"><label>Discord-Name</label><input id="appDiscord" type="text" placeholder="z. B. maxmustermann" required></div>
+        <div class="field"><label>Verfügbarkeit</label>
+          <select id="appAvail">
+            <option>Wochentags abends</option><option>Wochenende</option><option>Flexibel / täglich</option>
+          </select>
+        </div>
+        <div class="field"><label>Gewünschte Einheit</label>
+          <select id="appUnit">
+            <option value="Landespolizei">Landespolizei</option><option value="Kripo">Kripo</option>
+            <option value="Bundespolizei">Bundespolizei</option><option value="MEK">MEK</option>
+            <option value="SEK">SEK</option><option value="GSG9">GSG9</option>
+          </select>
+        </div>
+        <div class="field wide"><label>Motivation</label><textarea id="appMotivation" placeholder="Warum möchtest du der Polizei Hessen beitreten?" required></textarea></div>
+        <div class="field field-btn wide"><button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;">Bewerbung einreichen</button></div>
+      </form>
+      <div id="applicationResult"></div>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap">
+    <div class="sec-head"><div class="sec-head-text">
+      <span class="eyebrow">Behörde</span>
+      <h2>Über die Polizei Hessen</h2>
+    </div></div>
+    <div class="about-grid">
+      <div>
+        <p><b>Polizei Hessen</b> ist die fiktive Landespolizeibehörde unseres Rollenspiel-Servers. Wir sorgen im Spiel für Ordnung, bearbeiten Einsätze und bilden neue Beamte aus – von der Streife bis zum Präsidium.</p>
+        <p>Interessierte bewerben sich über das Formular oben. Nach Prüfung durch die Präsidiumsleitung erhältst du eine offizielle Dienstnummer und deinen ersten Rang.</p>
+        <p>Alle Inhalte dieser Seite dienen ausschließlich der Rollenspiel-Immersion und stehen in keinem Zusammenhang mit einer real existierenden Behörde.</p>
+      </div>
+      <div class="divisions">
+        <div class="division"><h4>Streifendienst</h4><p>Alltägliche Kontrollen, Verkehrsüberwachung, erste Ansprechstelle im Notfall.</p></div>
+        <div class="division"><h4>Kriminalpolizei</h4><p>Ermittlungen bei schweren Straftaten und Sondereinsätzen.</p></div>
+        <div class="division"><h4>Verkehrsdienst</h4><p>Autobahnstreifen, Geschwindigkeitskontrollen, Unfallaufnahme.</p></div>
+        <div class="division"><h4>Ausbildung</h4><p>Rekrutierung, Prüfungen und Fortbildung neuer Beamter.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="admin">
+  <div class="wrap">
+    <div class="sec-head"><div class="sec-head-text">
+      <span class="eyebrow">Verwaltung</span>
+      <h2>Admin-Bereich</h2>
+      <p>Nur für Präsidiumsleitung. Bewerbungen freigeben, Beamte, Fahndungen, Strafenkatalog, Bürgerakten, Dienstplan und Presse verwalten.</p>
+    </div></div>
+
+    <div id="adminLocked" class="lookup-panel">
+      <div class="lookup-form">
+        <input id="adminPass" type="password" placeholder="Admin-Passwort" autocomplete="off">
+        <button onclick="tryAdminLogin()">Anmelden</button>
+      </div>
+      <div class="lookup-hint">Demo-Passwort: <b>hessen2026</b> (nur clientseitig geprüft, für echte Absicherung wird ein Server benötigt)</div>
+    </div>
+
+    <div id="adminPanel" class="lookup-panel" style="display:none;">
+
+      <div class="admin-block">
+        <div class="webhook-box">
+          <div class="field">
+            <label>Discord-Webhook-URL (für Notruf-Meldungen)</label>
+            <div style="display:flex;gap:10px;">
+              <input id="webhookUrl" type="text" placeholder="https://discord.com/api/webhooks/...">
+              <button type="button" class="btn btn-ghost" onclick="saveWebhook()">Speichern</button>
+            </div>
+          </div>
+          <div class="lookup-hint">Rechtsklick auf euren Discord-Kanal → Kanal bearbeiten → Integrationen → Webhooks → Neuer Webhook → URL kopieren.</div>
+        </div>
+      </div>
+
+      <div class="admin-block">
+        <div class="admin-block-title">Bewerbungen (<span id="appPendingCount">0</span> ausstehend)</div>
+        <div class="admin-table" id="applicationTable"></div>
+      </div>
+
+      <div class="admin-block">
+        <div class="admin-block-title">Beamte manuell hinzufügen</div>
+        <form class="request-grid" onsubmit="return adminAddOfficer(event)">
+          <div class="field"><label>Name</label><input id="admName" type="text" placeholder="Vorname Nachname" required></div>
+          <div class="field"><label>Discord-Name</label><input id="admDiscord" type="text" placeholder="z. B. maxmustermann"></div>
+          <div class="field"><label>Rang</label><select id="admRank"></select></div>
+          <div class="field"><label>Einheit</label><select id="admUnit"></select></div>
+          <div class="field field-btn"><button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;">Beamten hinzufügen</button></div>
+        </form>
+        <div class="lookup-hint" style="margin:14px 0 12px;">Alle registrierten Beamten (<span id="officerCount">0</span>)</div>
+        <div class="admin-table" id="officerTable"></div>
+      </div>
+
+      <div class="admin-block">
+        <div class="admin-block-title">Fahndung verwalten</div>
+        <form class="request-grid" onsubmit="return adminAddWanted(event)">
+          <div class="field"><label>Name</label><input id="wName" type="text" placeholder="Name der Person" required></div>
+          <div class="field"><label>Gefährlichkeitsstufe</label>
+            <select id="wStufe"><option value="niedrig">Niedrig</option><option value="mittel" selected>Mittel</option><option value="hoch">Hoch</option></select>
+          </div>
+          <div class="field wide"><label>Grund</label><input id="wGrund" type="text" placeholder="z. B. Bewaffneter Raubüberfall" required></div>
+          <div class="field field-btn wide"><button type="submit" class="btn btn-ghost" style="width:100%;justify-content:center;">Zur Fahndung hinzufügen</button></div>
+        </form>
+        <div class="lookup-hint" style="margin:14px 0 12px;">Aktive Fahndungen</div>
+        <div class="admin-table" id="wantedAdminTable"></div>
+      </div>
+
+      <div class="admin-block">
+        <div class="admin-block-title">Strafenkatalog verwalten</div>
+        <form class="request-grid" onsubmit="return adminAddCatalog(event)">
+          <div class="field"><label>Vergehen</label><input id="catVergehen" type="text" placeholder="z. B. Fahrerflucht" required></div>
+          <div class="field"><label>Bußgeld</label><input id="catStrafe" type="text" placeholder="z. B. 800€" required></div>
+          <div class="field"><label>Haftzeit</label><input id="catHaft" type="text" placeholder="z. B. 10 Minuten"></div>
+          <div class="field field-btn"><button type="submit" class="btn btn-ghost" style="width:100%;justify-content:center;">Eintrag hinzufügen</button></div>
+        </form>
+        <div class="lookup-hint" style="margin:14px 0 12px;">Aktueller Katalog</div>
+        <div class="admin-table" id="catalogAdminTable"></div>
+      </div>
+
+      <div class="admin-block">
+        <div class="admin-block-title">Bürgerakte — Eintrag hinzufügen</div>
+        <form class="request-grid" onsubmit="return adminAddCitizenEntry(event)">
+          <div class="field"><label>Name der Person</label><input id="ciName" type="text" placeholder="Vorname Nachname" required></div>
+          <div class="field"><label>Vergehen</label><input id="ciVergehen" type="text" placeholder="z. B. Diebstahl" required></div>
+          <div class="field"><label>Verhängte Strafe</label><input id="ciStrafe" type="text" placeholder="z. B. 500€ + 3 Tage Haft" required></div>
+          <div class="field"><label>Eingetragen von</label><input id="ciBeamter" type="text" placeholder="Dein Name oder Dienstnummer"></div>
+          <div class="field field-btn wide"><button type="submit" class="btn btn-ghost" style="width:100%;justify-content:center;">Eintrag speichern</button></div>
+        </form>
+      </div>
+
+      <div class="admin-block">
+        <div class="admin-block-title">Dienstplan bearbeiten</div>
+        <div class="plan-wrap"><table class="plan-table" id="planAdminTable"></table></div>
+        <button type="button" class="btn btn-ghost btn-sm" style="margin-top:14px;" onclick="saveDienstplanFromInputs()">Dienstplan speichern</button>
+      </div>
+
+      <div class="admin-block">
+        <div class="admin-block-title">Pressemitteilung veröffentlichen</div>
+        <form class="request-grid" onsubmit="return adminAddPress(event)">
+          <div class="field wide"><label>Titel</label><input id="pTitel" type="text" placeholder="z. B. Verkehrskontrolle auf der A5" required></div>
+          <div class="field wide"><label>Text</label><textarea id="pText" placeholder="Kurzer Meldungstext" required></textarea></div>
+          <div class="field field-btn wide"><button type="submit" class="btn btn-ghost" style="width:100%;justify-content:center;">Veröffentlichen</button></div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-row">
+      <div class="foot-brand">
+        <svg width="20" height="20" viewBox="0 0 48 48" fill="none"><path d="M24 3 L42 10 V22 C42 34 34.5 41.5 24 45 C13.5 41.5 6 34 6 22 V10 Z" fill="none" stroke="#3E7FC4" stroke-width="2"/></svg>
+        Polizei Hessen
+      </div>
+      <div class="foot-links">
+        <a href="#notruf">Notruf</a>
+        <a href="#fahndung">Fahndung</a>
+        <a href="#lookup">Dienstnummer</a>
+        <a href="#ranks">Ränge</a>
+        <a href="#dienstplan">Dienstplan</a>
+        <a href="#presse">Presse</a>
+        <a href="#about">Über uns</a>
+      </div>
+    </div>
+    <div class="foot-note">
+      © 2026 Polizei Hessen — Rollenspiel-Behörde. Inoffizielles Fan-Projekt ohne Verbindung zu einer real existierenden Landespolizei oder Behörde. Alle Namen, Dienstnummern, Fahndungen und Statistiken auf dieser Seite sind fiktiv.
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ============================================================
+  // Backend-Anbindung: alle gemeinsamen Daten liegen in Cloudflare
+  // KV und werden über /api/* Functions gelesen/geschrieben.
+  // Admin-Login liefert ein Session-Token (im Server-KV geprüft),
+  // das im sessionStorage liegt (nur für diesen Tab, keine Klartext-
+  // Passwörter mehr im Quelltext).
+  // ============================================================
+  const TOKEN_KEY = 'ph_admin_token';
+  function getToken(){ return sessionStorage.getItem(TOKEN_KEY) || ''; }
+  function setToken(t){ sessionStorage.setItem(TOKEN_KEY, t); }
+  function clearToken(){ sessionStorage.removeItem(TOKEN_KEY); }
+
+  async function apiGet(){
+    const res = await fetch('/api/data');
+    if(!res.ok) throw new Error('Laden fehlgeschlagen');
+    return res.json();
+  }
+  async function apiSave(resource, value){
+    const res = await fetch('/api/save', {
+      method:'POST',
+      headers:{'Content-Type':'application/json','Authorization':'Bearer '+getToken()},
+      body: JSON.stringify({resource, value})
+    });
+    if(res.status===401){ alert('Sitzung abgelaufen — bitte erneut als Admin anmelden.'); location.reload(); throw new Error('unauthorized'); }
+    if(!res.ok) throw new Error('Speichern fehlgeschlagen');
+    return res.json();
+  }
+  async function apiNotruf(alert){
+    const res = await fetch('/api/notruf', {
+      method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(alert)
+    });
+    if(!res.ok) throw new Error('Notruf fehlgeschlagen');
+    return res.json();
+  }
+  async function apiLogin(password){
+    const res = await fetch('/api/login', {
+      method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({password})
+    });
+    return res.json();
+  }
+
+  // in-memory cache of the shared dataset, refreshed after each mutation
+  let STATE = { officers:[], alerts:[], wanted:[], catalog:[], citizens:[], applications:[], press:[], plan:null, badgeCounter:4001 };
+
+  function emptyPlan(){
+    const plan = {};
+    days.forEach(d=>{ plan[d] = {}; shifts.forEach(s=>{ plan[d][s] = ''; }); });
+    return plan;
+  }
+
+  async function loadAll(){
+    try{
+      const data = await apiGet();
+      STATE.officers = data.officers || seedOfficers;
+      STATE.alerts = data.alerts || [];
+      STATE.wanted = data.wanted || seedWanted;
+      STATE.catalog = data.catalog || seedCatalog;
+      STATE.citizens = data.citizens || seedCitizens;
+      STATE.applications = data.applications || [];
+      STATE.press = data.press || seedPress;
+      STATE.plan = data.plan || emptyPlan();
+      STATE.badgeCounter = data.badgeCounter || 4001;
+    } catch(e){
+      // Backend nicht erreichbar (z. B. lokal ohne Functions-Runtime getestet) -> Seed-Daten anzeigen
+      STATE = { officers:seedOfficers.slice(), alerts:[], wanted:seedWanted.slice(), catalog:seedCatalog.slice(), citizens:seedCitizens.slice(), applications:[], press:seedPress.slice(), plan:emptyPlan(), badgeCounter:4001 };
+      console.warn('API nicht erreichbar — Demo-Daten werden angezeigt. Auf Cloudflare Pages mit eingerichteten Functions funktioniert das live.');
+    }
+    renderEverything();
+  }
+
+  function nextBadgeLocalPreview(){ return "HE-" + STATE.badgeCounter; }
+
+  function renderEverything(){
+    refreshStats();
+    renderAlertLog();
+    renderWantedGrid();
+    renderCatalogTable();
+    renderPlanTable('planTable', false);
+    renderPress();
+    if(document.getElementById('adminPanel').style.display !== 'none' && getToken()){
+      renderOfficerTable();
+      renderApplicationTable();
+      renderWantedAdmin();
+      renderCatalogAdmin();
+      renderPlanTable('planAdminTable', true);
+    }
+  }
+
+  function refreshStats(){
+    animateCount(document.getElementById('c1'), STATE.officers.length, 700);
+    animateCount(document.getElementById('c2'), STATE.wanted.filter(w=>w.status==='gesucht').length, 700);
+    animateCount(document.getElementById('c3'), STATE.alerts.length, 700);
+    animateCount(document.getElementById('c4'), STATE.alerts.filter(a=>a.status!=='done').length, 700);
+  }
+  function animateCount(el, target, duration){
+    let startTime=null;
+    function step(ts){
+      if(!startTime) startTime=ts;
+      const progress = Math.min((ts-startTime)/duration,1);
+      el.textContent = Math.floor(progress*target).toString();
+      if(progress<1) requestAnimationFrame(step); else el.textContent = target.toString();
+    }
+    requestAnimationFrame(step);
+  }
+
+  // ---------- static reference data (ranks & units, no backend needed) ----------
+  const ranks = [
+    {tier:"01", name:"Polizeipräsident", desc:"Leitung der gesamten Behörde"},
+    {tier:"02", name:"Vizepräsident", desc:"Stellvertretende Leitung"},
+    {tier:"03", name:"Polizeidirektor", desc:"Leitung eines Reviers"},
+    {tier:"04", name:"Erster Polizeihauptkommissar", desc:"Oberste Kommissarsebene"},
+    {tier:"05", name:"Polizeihauptkommissar", desc:"Führung von Einsatzteams"},
+    {tier:"06", name:"Polizeikommissar", desc:"Ermittlung & Sachbearbeitung"},
+    {tier:"07", name:"Polizeiobermeister", desc:"Erfahrener Streifenbeamter"},
+    {tier:"08", name:"Polizeimeister", desc:"Regulärer Streifendienst"},
+    {tier:"09", name:"Anwärter", desc:"In Ausbildung befindlich"}
+  ];
+  const rankList = document.getElementById('rankList');
+  ranks.forEach((r,i)=>{
+    const bars = Array.from({length:5},(_,b)=> b < 5-Math.min(i,4) ? '<span class="rank-bar on"></span>' : '<span class="rank-bar"></span>').join('');
+    rankList.innerHTML += '<div class="rank-row"><div class="rank-tier">'+r.tier+'</div><div class="rank-name">'+r.name+'<span>'+r.desc+'</span></div><div class="rank-bars">'+bars+'</div></div>';
+  });
+  const units = [
+    {name:"Landespolizei", desc:"Regulärer Streifen- und Ordnungsdienst im gesamten Bundesland.", special:false, tag:"Grundstruktur"},
+    {name:"Kripo", desc:"Kriminalpolizei — Ermittlungen bei schweren und komplexen Straftaten.", special:false, tag:"Ermittlung"},
+    {name:"Bundespolizei", desc:"Zuständig für Bahnhöfe, Grenzschutz und überregionale Einsätze.", special:false, tag:"Bundesebene"},
+    {name:"MEK", desc:"Mobiles Einsatzkommando — verdeckte Beobachtung und Zugriffe.", special:true, tag:"Spezialeinheit"},
+    {name:"SEK", desc:"Spezialeinsatzkommando — Geiselnahmen, Erstürmungen, Hochrisikoeinsätze.", special:true, tag:"Spezialeinheit"},
+    {name:"GSG9", desc:"Antiterror- und Spezialeinheit für die gefährlichsten Einsatzlagen.", special:true, tag:"Spezialeinheit"}
+  ];
+  const unitGrid = document.getElementById('unitGrid');
+  units.forEach(u=>{
+    unitGrid.innerHTML += '<div class="unit-card '+(u.special?'special':'')+'"><div class="unit-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">'+(u.special ? '<path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6l8-4Z"/>' : '<path d="M4 20h16M6 20V10l6-4 6 4v10M10 20v-6h4v6"/>')+'</svg></div><h4>'+u.name+'</h4><p>'+u.desc+'</p><span class="unit-tag">'+u.tag+'</span></div>';
+  });
+  const days = ["Montag","Dienstag","Mittwoch","Donnerstag","Freitag","Samstag","Sonntag"];
+  const shifts = ["Früh (06–14)","Spät (14–22)","Nacht (22–06)"];
+  const seedOfficers = [
+    {name:"L. Weber", rank:"Polizeihauptkommissar", badge:"HE-1042", unit:"Landespolizei", since:"2022", discord:"—"},
+    {name:"J. Klein", rank:"Polizeikommissar", badge:"HE-2210", unit:"Kripo", since:"2023", discord:"—"},
+    {name:"S. Baumann", rank:"Polizeiobermeister", badge:"HE-3305", unit:"SEK", since:"2024", discord:"—"},
+    {name:"D. Sürmeli", rank:"Vizepräsident", badge:"HE-0007", unit:"Landespolizei", since:"2020", discord:"—"}
+  ];
+  const seedWanted = [
+    {id:1, name:"T. Brandt", grund:"Bewaffneter Raubüberfall auf eine Bank", stufe:"hoch", status:"gesucht"},
+    {id:2, name:"M. Özkan", grund:"Flucht nach Verkehrskontrolle", stufe:"mittel", status:"gesucht"},
+    {id:3, name:"R. Voss", grund:"Diebstahl mehrerer Fahrzeuge", stufe:"niedrig", status:"gesucht"}
+  ];
+  const seedCatalog = [
+    {vergehen:"Geschwindigkeitsüberschreitung", strafe:"150€", haft:"—"},
+    {vergehen:"Fahren ohne Führerschein", strafe:"400€", haft:"5 Minuten"},
+    {vergehen:"Trunkenheit am Steuer", strafe:"600€", haft:"10 Minuten"},
+    {vergehen:"Widerstand gegen Vollstreckungsbeamte", strafe:"500€", haft:"8 Minuten"},
+    {vergehen:"Diebstahl", strafe:"300€", haft:"5 Minuten"},
+    {vergehen:"Raub", strafe:"1200€", haft:"15 Minuten"},
+    {vergehen:"Waffenbesitz ohne Schein", strafe:"800€", haft:"12 Minuten"},
+    {vergehen:"Körperverletzung", strafe:"700€", haft:"10 Minuten"}
+  ];
+  const seedCitizens = [
+    {id:1, name:"P. Hartmann", datum:"03.01.2026", vergehen:"Geschwindigkeitsüberschreitung", strafe:"150€", beamter:"HE-1042"},
+    {id:2, name:"P. Hartmann", datum:"22.03.2026", vergehen:"Trunkenheit am Steuer", strafe:"600€ + 10 Min. Haft", beamter:"HE-2210"}
+  ];
+  const seedPress = [
+    {id:1, titel:"Verkehrskontrolle auf der A5", text:"Am Wochenende führt die Landespolizei verstärkte Geschwindigkeitskontrollen auf der A5 durch.", datum:"12.02.2026"},
+    {id:2, titel:"Neue Anwärter im Dienst", text:"Fünf neue Anwärter haben ihre Ausbildung erfolgreich abgeschlossen und verstärken ab sofort die Streife.", datum:"04.01.2026"}
+  ];
+
+  // ---------- Dienstnummer-Suche ----------
+  function runLookup(){
+    const q = document.getElementById('lookupInput').value.trim().toLowerCase();
+    const card = document.getElementById('idCard');
+    const empty = document.getElementById('idEmpty');
+    const found = STATE.officers.find(o => o.name.toLowerCase().includes(q) || o.badge.toLowerCase() === q || (o.discord && o.discord.toLowerCase() === q));
+    if(found && q){
+      document.getElementById('oName').textContent = found.name;
+      document.getElementById('oRank').textContent = found.rank;
+      document.getElementById('oBadge').textContent = found.badge;
+      document.getElementById('oUnit').textContent = found.unit;
+      document.getElementById('oSince').textContent = found.since;
+      document.getElementById('oCall').textContent = found.discord && found.discord !== "—" ? "@"+found.discord : "nicht verknüpft";
+      card.classList.add('show'); empty.classList.remove('show');
+    } else {
+      card.classList.remove('show'); empty.classList.add('show');
+      empty.textContent = q ? 'Keine Dienstnummer für "'+q+'" gefunden.' : 'Bitte gib einen Namen oder eine Dienstnummer ein.';
+    }
+  }
+  document.getElementById('lookupInput').addEventListener('keydown', e=>{ if(e.key==='Enter') runLookup(); });
+
+  // ---------- Discord-Statuszeile (nur lokaler Hinweis, keine echte OAuth-Session) ----------
+  function renderDiscordStatus(){
+    const linked = sessionStorage.getItem('ph_discord_hint');
+    const el = document.getElementById('discordStatus');
+    el.innerHTML = linked
+      ? 'Zuletzt verwendeter Discord-Name: <b>@'+linked+'</b>'
+      : 'Noch kein Discord-Name hinterlegt · <a href="#bewerbung" style="color:#8992F5;">bei der Bewerbung angeben</a>';
+  }
+  renderDiscordStatus();
+
+  // ---------- Notruf ----------
+  function prioLabel(p){ return p==='1' ? 'Stufe 1' : p==='2' ? 'Stufe 2' : 'Stufe 3'; }
+  async function submitAlert(evt){
+    evt.preventDefault();
+    const ort = document.getElementById('alOrt').value.trim();
+    const art = document.getElementById('alArt').value;
+    const prio = document.getElementById('alPrio').value;
+    const melder = document.getElementById('alMelder').value.trim() || 'Anonym';
+    const beschreibung = document.getElementById('alBeschreibung').value.trim();
+    if(!ort) return false;
+    const btn = evt.target.querySelector('button[type=submit]');
+    btn.disabled = true; btn.textContent = 'Wird gesendet…';
+    try{
+      const res = await apiNotruf({ ort, art, prio, melder, beschreibung });
+      STATE.alerts.unshift(res.alert);
+      renderAlertLog(); refreshStats();
+      document.getElementById('alertResult').innerHTML = '<div class="result-card" style="border-color:rgba(200,32,46,.35);background:rgba(200,32,46,.06);">Alarm ausgelöst für <b>'+ort+'</b> ('+art+', '+prioLabel(prio)+'). Erscheint im Einsatzprotokoll unten.</div>';
+      evt.target.reset(); document.getElementById('alPrio').value = '2';
+    } catch(e){
+      document.getElementById('alertResult').innerHTML = '<div class="result-card" style="border-color:rgba(200,32,46,.4);">Alarm konnte nicht gesendet werden — Backend nicht erreichbar.</div>';
+    }
+    btn.disabled = false; btn.textContent = 'Alarm auslösen';
+    return false;
+  }
+  function renderAlertLog(){
+    const alerts = STATE.alerts;
+    const log = document.getElementById('alertLog');
+    if(alerts.length === 0){ log.innerHTML = '<div class="log-empty">Noch keine Einsätze gemeldet.</div>'; return; }
+    const statusLabel = {open:'offen', progress:'in Bearbeitung', done:'abgeschlossen'};
+    log.innerHTML = '<div class="admin-row header alert-row"><div>Priorität</div><div>Ort</div><div>Art</div><div>Zeit</div><div>Status</div><div></div></div>' +
+      alerts.map(a => '<div class="admin-row alert-row"><div><span class="prio-badge prio-'+a.prio+'">'+prioLabel(a.prio)+'</span></div><div>'+a.ort+'</div><div>'+a.art+'</div><div style="font-family:var(--font-mono);font-size:11.5px;color:var(--text-2);">'+a.time+'</div><div><button class="status-toggle '+a.status+'" onclick="cycleAlertStatus('+a.id+')" '+(getToken()?'':'disabled title="Nur als Admin änderbar"')+'>'+statusLabel[a.status]+'</button></div><button class="del-btn" onclick="deleteAlert('+a.id+')" '+(getToken()?'':'disabled')+'>×</button></div>').join('');
+  }
+  async function cycleAlertStatus(id){
+    if(!getToken()) return;
+    const map = {open:'progress', progress:'done', done:'open'};
+    const a = STATE.alerts.find(x=>x.id===id);
+    if(!a) return;
+    a.status = map[a.status];
+    await apiSave('alerts', STATE.alerts);
+    renderAlertLog(); refreshStats();
+  }
+  async function deleteAlert(id){
+    if(!getToken()) return;
+    STATE.alerts = STATE.alerts.filter(a=>a.id!==id);
+    await apiSave('alerts', STATE.alerts);
+    renderAlertLog(); refreshStats();
+  }
+
+  // ---------- Fahndung ----------
+  function renderWantedGrid(){
+    const list = STATE.wanted.filter(w=>w.status==='gesucht');
+    const grid = document.getElementById('wantedGrid');
+    if(list.length===0){ grid.innerHTML = '<div class="wanted-empty">Aktuell liegen keine Fahndungen vor.</div>'; return; }
+    grid.innerHTML = list.map(w => '<div class="wanted-card"><span class="stufe-badge stufe-'+w.stufe+'">'+w.stufe+'</span><h4>'+w.name+'</h4><p>'+w.grund+'</p></div>').join('');
+  }
+  function renderWantedAdmin(){
+    const table = document.getElementById('wantedAdminTable');
+    if(!table) return;
+    table.innerHTML = '<div class="admin-row header"><div>Name</div><div>Grund</div><div>Stufe</div><div>Status</div><div></div></div>' +
+      STATE.wanted.map((w,i)=>'<div class="admin-row"><div>'+w.name+'</div><div>'+w.grund+'</div><div><span class="stufe-badge stufe-'+w.stufe+'">'+w.stufe+'</span></div><div><button class="status-toggle '+(w.status==='gesucht'?'open':'done')+'" onclick="toggleWantedStatus('+i+')">'+(w.status==='gesucht'?'gesucht':'gefasst')+'</button></div><button class="del-btn" onclick="deleteWanted('+i+')">×</button></div>').join('');
+  }
+  async function toggleWantedStatus(i){
+    STATE.wanted[i].status = STATE.wanted[i].status==='gesucht' ? 'gefasst' : 'gesucht';
+    await apiSave('wanted', STATE.wanted);
+    renderWantedAdmin(); renderWantedGrid(); refreshStats();
+  }
+  async function deleteWanted(i){
+    STATE.wanted.splice(i,1);
+    await apiSave('wanted', STATE.wanted);
+    renderWantedAdmin(); renderWantedGrid(); refreshStats();
+  }
+  async function adminAddWanted(evt){
+    evt.preventDefault();
+    const name = document.getElementById('wName').value.trim();
+    const grund = document.getElementById('wGrund').value.trim();
+    const stufe = document.getElementById('wStufe').value;
+    if(!name || !grund) return false;
+    STATE.wanted.unshift({id: Date.now(), name, grund, stufe, status:'gesucht'});
+    await apiSave('wanted', STATE.wanted);
+    renderWantedAdmin(); renderWantedGrid(); refreshStats();
+    evt.target.reset();
+    return false;
+  }
+
+  // ---------- Strafenkatalog ----------
+  function renderCatalogTable(){
+    document.getElementById('catalogTable').innerHTML = '<div class="cat-row header"><div>Vergehen</div><div>Bußgeld</div><div>Haftzeit</div></div>' +
+      STATE.catalog.map(c=>'<div class="cat-row"><div>'+c.vergehen+'</div><b>'+c.strafe+'</b><div>'+(c.haft||'—')+'</div></div>').join('');
+  }
+  function renderCatalogAdmin(){
+    const table = document.getElementById('catalogAdminTable');
+    if(!table) return;
+    table.innerHTML = '<div class="admin-row header"><div>Vergehen</div><div>Bußgeld</div><div>Haftzeit</div><div></div><div></div></div>' +
+      STATE.catalog.map((c,i)=>'<div class="admin-row"><div>'+c.vergehen+'</div><b>'+c.strafe+'</b><div>'+(c.haft||'—')+'</div><div></div><button class="del-btn" onclick="deleteCatalog('+i+')">×</button></div>').join('');
+  }
+  async function deleteCatalog(i){ STATE.catalog.splice(i,1); await apiSave('catalog', STATE.catalog); renderCatalogAdmin(); renderCatalogTable(); }
+  async function adminAddCatalog(evt){
+    evt.preventDefault();
+    const vergehen = document.getElementById('catVergehen').value.trim();
+    const strafe = document.getElementById('catStrafe').value.trim();
+    const haft = document.getElementById('catHaft').value.trim();
+    if(!vergehen || !strafe) return false;
+    STATE.catalog.push({vergehen, strafe, haft});
+    await apiSave('catalog', STATE.catalog);
+    renderCatalogAdmin(); renderCatalogTable(); evt.target.reset();
+    return false;
+  }
+
+  // ---------- Bürgerakte ----------
+  function runCitizenLookup(){
+    const q = document.getElementById('citizenInput').value.trim().toLowerCase();
+    const result = document.getElementById('citizenResult');
+    if(!q){ result.innerHTML = ''; return; }
+    const entries = STATE.citizens.filter(c=>c.name.toLowerCase().includes(q));
+    if(entries.length===0){ result.innerHTML = '<div class="id-empty show">Keine Einträge für "'+q+'" gefunden.</div>'; return; }
+    result.innerHTML = '<div class="record-search-result">' + entries.map(e=>'<div class="record-entry"><div><b>'+e.vergehen+'</b><div class="record-meta">'+e.name+' · '+e.datum+' · eingetragen von '+e.beamter+'</div></div><div>'+e.strafe+'</div></div>').join('') + '</div>';
+  }
+  document.getElementById('citizenInput').addEventListener('keydown', e=>{ if(e.key==='Enter') runCitizenLookup(); });
+  async function adminAddCitizenEntry(evt){
+    evt.preventDefault();
+    const name = document.getElementById('ciName').value.trim();
+    const vergehen = document.getElementById('ciVergehen').value.trim();
+    const strafe = document.getElementById('ciStrafe').value.trim();
+    const beamter = document.getElementById('ciBeamter').value.trim() || 'unbekannt';
+    if(!name || !vergehen || !strafe) return false;
+    STATE.citizens.push({id: Date.now(), name, vergehen, strafe, beamter, datum: new Date().toLocaleDateString('de-DE')});
+    await apiSave('citizens', STATE.citizens);
+    evt.target.reset();
+    return false;
+  }
+
+  // ---------- Dienstplan ----------
+  function renderPlanTable(targetId, editable){
+    const plan = STATE.plan || emptyPlan();
+    let html = '<tr><th>Schicht</th>' + days.map(d=>'<th>'+d+'</th>').join('') + '</tr>';
+    shifts.forEach(s=>{
+      html += '<tr><th>'+s+'</th>' + days.map(d=>{
+        const val = (plan[d] && plan[d][s]) || '';
+        return editable
+          ? '<td><input data-day="'+d+'" data-shift="'+s+'" value="'+val.replace(/"/g,'&quot;')+'" placeholder="—"></td>'
+          : '<td>'+(val || '—')+'</td>';
+      }).join('') + '</tr>';
+    });
+    const el = document.getElementById(targetId);
+    if(el) el.innerHTML = html;
+  }
+  async function saveDienstplanFromInputs(){
+    const plan = STATE.plan || emptyPlan();
+    document.querySelectorAll('#planAdminTable input').forEach(inp=>{ plan[inp.dataset.day][inp.dataset.shift] = inp.value.trim(); });
+    STATE.plan = plan;
+    await apiSave('plan', plan);
+    renderPlanTable('planTable', false);
+  }
+
+  // ---------- Presse ----------
+  function renderPress(){
+    const list = STATE.press.slice().sort((a,b)=>b.id-a.id);
+    document.getElementById('pressList').innerHTML = list.map(p=>'<div class="press-card"><div class="press-date">'+p.datum+'</div><h4>'+p.titel+'</h4><p>'+p.text+'</p></div>').join('');
+  }
+  async function adminAddPress(evt){
+    evt.preventDefault();
+    const titel = document.getElementById('pTitel').value.trim();
+    const text = document.getElementById('pText').value.trim();
+    if(!titel || !text) return false;
+    STATE.press.push({id: Date.now(), titel, text, datum: new Date().toLocaleDateString('de-DE')});
+    await apiSave('press', STATE.press);
+    renderPress(); evt.target.reset();
+    return false;
+  }
+
+  // ---------- Bewerbungen ----------
+  async function submitApplication(evt){
+    evt.preventDefault();
+    const name = document.getElementById('appName').value.trim();
+    const discord = document.getElementById('appDiscord').value.trim().replace(/^@/,'');
+    const avail = document.getElementById('appAvail').value;
+    const unit = document.getElementById('appUnit').value;
+    const motivation = document.getElementById('appMotivation').value.trim();
+    if(!name || !discord || !motivation) return false;
+    const entry = { id: Date.now(), name, discord, avail, unit, motivation, status:'pending', date: new Date().toLocaleDateString('de-DE') };
+    STATE.applications.push(entry);
+    // Bewerbungen werden über eine eigene öffentliche Function gespeichert (kein Admin-Token nötig, nur Anhängen erlaubt)
+    await fetch('/api/apply', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(entry) }).catch(()=>{});
+    sessionStorage.setItem('ph_discord_hint', discord); renderDiscordStatus();
+    document.getElementById('applicationResult').innerHTML = '<div class="result-card pending">Bewerbung eingegangen. Status: <b>ausstehend</b>. Die Präsidiumsleitung prüft deine Bewerbung — bei Annahme erhältst du deine Dienstnummer.</div>';
+    evt.target.reset();
+    return false;
+  }
+  function renderApplicationTable(){
+    const table = document.getElementById('applicationTable');
+    if(!table) return;
+    const list = STATE.applications;
+    document.getElementById('appPendingCount').textContent = list.filter(a=>a.status==='pending').length;
+    if(list.length===0){ table.innerHTML = '<div class="log-empty">Noch keine Bewerbungen eingegangen.</div>'; return; }
+    const statusLabel = {pending:'ausstehend', approved:'angenommen', rejected:'abgelehnt'};
+    table.innerHTML = '<div class="admin-row header app-row"><div>Name</div><div>Discord</div><div>Einheit</div><div>Status</div><div></div><div></div></div>' +
+      list.slice().reverse().map(a=>'<div class="admin-row app-row"><div>'+a.name+'</div><div>@'+a.discord+'</div><div>'+a.unit+'</div><div><span class="status-toggle '+(a.status==='pending'?'progress':a.status==='approved'?'done':'open')+'">'+statusLabel[a.status]+'</span></div>' +
+      (a.status==='pending' ? '<button class="status-toggle app-approve" onclick="approveApplication('+a.id+')">annehmen</button><button class="status-toggle app-reject" onclick="rejectApplication('+a.id+')">ablehnen</button>' : '<div></div><div></div>') + '</div>').join('');
+  }
+  async function approveApplication(id){
+    const app = STATE.applications.find(a=>a.id===id);
+    if(!app) return;
+    app.status = 'approved';
+    STATE.officers.push({ name: app.name, rank:'Anwärter', unit: app.unit, discord: app.discord, badge: 'HE-'+STATE.badgeCounter, since: new Date().getFullYear().toString() });
+    STATE.badgeCounter += 1;
+    await apiSave('applications', STATE.applications);
+    await apiSave('officers', STATE.officers);
+    await apiSave('badgeCounter', STATE.badgeCounter);
+    renderApplicationTable(); renderOfficerTable(); refreshStats();
+  }
+  async function rejectApplication(id){
+    const app = STATE.applications.find(a=>a.id===id);
+    if(app){ app.status = 'rejected'; await apiSave('applications', STATE.applications); renderApplicationTable(); }
+  }
+
+  // ---------- Admin-Login (Passwort verlässt nie sichtbar den Server-Check) ----------
+  async function tryAdminLogin(){
+    const val = document.getElementById('adminPass').value;
+    const btn = event.target;
+    btn.disabled = true; btn.textContent = 'Prüfe…';
+    try{
+      const res = await apiLogin(val);
+      if(res.ok){
+        setToken(res.token);
+        document.getElementById('adminLocked').style.display = 'none';
+        document.getElementById('adminPanel').style.display = 'grid';
+        populateAdminSelects();
+        renderOfficerTable();
+        renderApplicationTable();
+        renderWantedAdmin();
+        renderCatalogAdmin();
+        renderPlanTable('planAdminTable', true);
+        renderWebhookState();
+      } else {
+        document.getElementById('adminPass').style.borderColor = 'var(--red)';
+      }
+    } catch(e){
+      alert('Backend nicht erreichbar. Admin-Login funktioniert nur, wenn die Seite über Cloudflare Pages mit eingerichteten Functions läuft.');
+    }
+    btn.disabled = false; btn.textContent = 'Anmelden';
+  }
+  function populateAdminSelects(){
+    document.getElementById('admRank').innerHTML = ranks.map(r=>'<option value="'+r.name+'">'+r.name+'</option>').join('');
+    document.getElementById('admUnit').innerHTML = units.map(u=>'<option value="'+u.name+'">'+u.name+'</option>').join('');
+  }
+  async function adminAddOfficer(evt){
+    evt.preventDefault();
+    const name = document.getElementById('admName').value.trim();
+    const discord = document.getElementById('admDiscord').value.trim().replace(/^@/,'') || "—";
+    const rank = document.getElementById('admRank').value;
+    const unit = document.getElementById('admUnit').value;
+    if(!name) return false;
+    STATE.officers.push({ name, rank, unit, discord, badge: 'HE-'+STATE.badgeCounter, since: new Date().getFullYear().toString() });
+    STATE.badgeCounter += 1;
+    await apiSave('officers', STATE.officers);
+    await apiSave('badgeCounter', STATE.badgeCounter);
+    renderOfficerTable(); evt.target.reset(); populateAdminSelects(); refreshStats();
+    return false;
+  }
+  function renderOfficerTable(){
+    document.getElementById('officerCount').textContent = STATE.officers.length;
+    const table = document.getElementById('officerTable');
+    table.innerHTML = '<div class="admin-row header"><div>Name</div><div>Rang</div><div>Einheit</div><div>Nummer</div><div></div></div>' +
+      STATE.officers.map((o,i)=>'<div class="admin-row"><div>'+o.name+'</div><div>'+o.rank+'</div><div>'+o.unit+'</div><b>'+o.badge+'</b><button class="del-btn" onclick="deleteOfficer('+i+')" aria-label="Beamten löschen">×</button></div>').join('');
+  }
+  async function deleteOfficer(i){ STATE.officers.splice(i,1); await apiSave('officers', STATE.officers); renderOfficerTable(); refreshStats(); }
+
+  // Discord-Webhook wird ausschließlich serverseitig in den Umgebungsvariablen gepflegt (siehe README) —
+  // die Weboberfläche zeigt hier nur an, ob eine Verknüpfung serverseitig aktiv ist.
+  function renderWebhookState(){
+    const el = document.getElementById('webhookState');
+    if(el) el.textContent = 'Discord-Anbindung wird serverseitig verwaltet (siehe README: DISCORD_WEBHOOK_URL)';
+    const box = document.querySelector('.webhook-box');
+    if(box) box.innerHTML = '<div class="lookup-hint">Die Discord-Webhook-URL wird nicht mehr über die Website gespeichert. Trage sie als Umgebungsvariable <b>DISCORD_WEBHOOK_URL</b> in den Cloudflare-Pages-Einstellungen ein (siehe README.md).</div>';
+  }
+
+  // ---------- init ----------
+  loadAll();
+</script>
+
+</body>
+</html>

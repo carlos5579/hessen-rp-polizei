@@ -1,0 +1,8 @@
+name = "polizei-hessen"
+compatibility_date = "2024-11-01"
+pages_build_output_dir = "."
+
+# Nach dem Erstellen des KV-Namespace (siehe README) hier die echte ID eintragen:
+[[kv_namespaces]]
+binding = "PH_KV"
+id = "HIER_DEINE_KV_NAMESPACE_ID_EINTRAGEN"
