@@ -3,7 +3,7 @@
 ## Was ist neu gegenüber der reinen HTML-Version?
 
 Statt Daten nur im Browser (`localStorage`) zu speichern, laufen jetzt echte
-Server-Funktionen im Ordner `functions/`. Dadurch:
+Server-Funktionen im Ordner `functions/`. Dadurch:   
 
 - **Admin-Passwort** steht nicht mehr im Quelltext, sondern wird serverseitig
   als Umgebungsvariable geprüft.
