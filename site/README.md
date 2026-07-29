@@ -13,7 +13,7 @@ Server-Funktionen im Ordner `functions/`. Dadurch:
   gespeichert in Cloudflare KV statt getrennt pro Browser.      
 
 ## Voraussetzungen
-
+                 
 - Ein kostenloser Cloudflare-Account
 - Node.js installiert (für die `wrangler`-Kommandozeile)
 
