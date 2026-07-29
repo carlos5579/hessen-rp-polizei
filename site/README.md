@@ -10,7 +10,7 @@ Server-Funktionen im Ordner `functions/`. Dadurch:
 - **Discord-Webhook-URL** wird nie an den Browser ausgeliefert — sie bleibt
   komplett serverseitig.
 - **Alle Besucher sehen dieselben Daten** (Beamte, Notrufe, Fahndungen, …),
-  gespeichert in Cloudflare KV statt getrennt pro Browser.
+  gespeichert in Cloudflare KV statt getrennt pro Browser.      
 
 ## Voraussetzungen
 
