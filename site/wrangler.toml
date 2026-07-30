@@ -9,4 +9,4 @@ binding = "ASSETS"
 # Nach dem Erstellen des KV-Namespace (siehe README) hier die echte ID eintragen:
 [[kv_namespaces]]
 binding = "PH_KV"
-id = "HIER_DEINE_KV_NAMESPACE_ID_EINTRAGEN"
+id = "12b5737a82684d12b81af52c9d8b030e"
