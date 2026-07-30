@@ -700,15 +700,6 @@
       isMutating = false;
     }
   }
-    const res = await fetch('/api/save', {
-      method:'POST',
-      headers:{'Content-Type':'application/json','Authorization':'Bearer '+getToken()},
-      body: JSON.stringify({resource, value})
-    });
-    if(res.status===401){ alert('Sitzung abgelaufen — bitte erneut als Admin anmelden.'); location.reload(); throw new Error('unauthorized'); }
-    if(!res.ok) throw new Error('Speichern fehlgeschlagen');
-    return res.json();
-  }
   async function apiNotruf(alert){
     const res = await fetch('/api/notruf', {
       method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(alert)
@@ -1170,7 +1161,7 @@
       STATE.press = data.press || STATE.press;
       STATE.plan = data.plan || STATE.plan;
       STATE.badgeCounter = data.badgeCounter || STATE.badgeCounter;
-    } catch(e){ return; }
+    } catch(e){ return; } // Backend kurz nicht erreichbar -> einfach beim nächsten Intervall erneut versuchen
 
     refreshStats();
     renderAlertLog();
@@ -1185,6 +1176,8 @@
       renderApplicationTable();
       renderWantedAdmin();
       renderCatalogAdmin();
+      // Der editierbare Dienstplan (planAdminTable) wird beim Polling bewusst NICHT
+      // neu gerendert, damit laufende Eingaben eines Admins nicht überschrieben werden.
     }
   }
   setInterval(pollUpdate, POLL_INTERVAL_MS);
