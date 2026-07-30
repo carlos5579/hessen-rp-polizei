@@ -1140,6 +1140,39 @@
     if(box) box.innerHTML = '<div class="lookup-hint">Die Discord-Webhook-URL wird nicht mehr über die Website gespeichert. Trage sie als Umgebungsvariable <b>DISCORD_WEBHOOK_URL</b> in den Cloudflare-Pages-Einstellungen ein (siehe README.md).</div>';
   }
 
+  // ---------- Live-Update per Polling ----------
+  const POLL_INTERVAL_MS = 10000; // alle 10 Sekunden neu abfragen
+  async function pollUpdate(){
+    try{
+      const data = await apiGet();
+      STATE.officers = data.officers || STATE.officers;
+      STATE.alerts = data.alerts || STATE.alerts;
+      STATE.wanted = data.wanted || STATE.wanted;
+      STATE.catalog = data.catalog || STATE.catalog;
+      STATE.citizens = data.citizens || STATE.citizens;
+      STATE.applications = data.applications || STATE.applications;
+      STATE.press = data.press || STATE.press;
+      STATE.plan = data.plan || STATE.plan;
+      STATE.badgeCounter = data.badgeCounter || STATE.badgeCounter;
+    } catch(e){ return; }
+
+    refreshStats();
+    renderAlertLog();
+    renderWantedGrid();
+    renderCatalogTable();
+    renderPress();
+    renderPlanTable('planTable', false);
+
+    const adminOpen = getToken() && document.getElementById('adminPanel').style.display !== 'none';
+    if(adminOpen){
+      renderOfficerTable();
+      renderApplicationTable();
+      renderWantedAdmin();
+      renderCatalogAdmin();
+    }
+  }
+  setInterval(pollUpdate, POLL_INTERVAL_MS);
+
   // ---------- init ----------
   loadAll();
 </script>
