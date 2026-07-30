@@ -684,7 +684,22 @@
     if(!res.ok) throw new Error('Laden fehlgeschlagen');
     return res.json();
   }
+  let isMutating = false;
   async function apiSave(resource, value){
+    isMutating = true;
+    try{
+      const res = await fetch('/api/save', {
+        method:'POST',
+        headers:{'Content-Type':'application/json','Authorization':'Bearer '+getToken()},
+        body: JSON.stringify({resource, value})
+      });
+      if(res.status===401){ alert('Sitzung abgelaufen — bitte erneut als Admin anmelden.'); location.reload(); throw new Error('unauthorized'); }
+      if(!res.ok) throw new Error('Speichern fehlgeschlagen');
+      return res.json();
+    } finally {
+      isMutating = false;
+    }
+  }
     const res = await fetch('/api/save', {
       method:'POST',
       headers:{'Content-Type':'application/json','Authorization':'Bearer '+getToken()},
@@ -1143,6 +1158,7 @@
   // ---------- Live-Update per Polling ----------
   const POLL_INTERVAL_MS = 10000; // alle 10 Sekunden neu abfragen
   async function pollUpdate(){
+    if(isMutating) return; // während des Speicherns nicht überschreiben
     try{
       const data = await apiGet();
       STATE.officers = data.officers || STATE.officers;
