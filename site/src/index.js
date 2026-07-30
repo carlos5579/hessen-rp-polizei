@@ -8,7 +8,7 @@
 
 const DATA_KEYS = [
   "officers", "alerts", "wanted", "catalog", "citizens",
-  "applications", "press", "plan", "badgeCounter",
+  "applications", "press", "plan", "badgeCounter", "ranks",
 ];
 
 export default {
