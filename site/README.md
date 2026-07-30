@@ -5,7 +5,7 @@
 Statt Daten nur im Browser (`localStorage`) zu speichern, laufen jetzt echte                    
 Server-Funktionen im Ordner `functions/`. Dadurch:                 
 
-- **Admin-Passwort** steht nicht mehr im Quelltext, sondern wird serverseitig
+- **Admin-Passwort** steht nicht mehr im Quelltext, sondern wird serverseitig     
   als Umgebungsvariable geprüft.
 - **Discord-Webhook-URL** wird nie an den Browser ausgeliefert — sie bleibt
   komplett serverseitig.
