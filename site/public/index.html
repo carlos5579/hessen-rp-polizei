@@ -298,6 +298,7 @@
       <a href="#notruf" class="notruf-link">Notruf</a>
       <a href="#fahndung">Fahndung</a>
       <a href="#buerger">Bürgerakte</a>
+      <a href="#anzeige">Anzeige</a>
       <a href="#dienstplan">Dienstplan</a>
       <a href="#presse">Presse</a>
       <a href="#bewerbung">Bewerbung</a>
@@ -337,7 +338,12 @@
       <span class="eyebrow" style="color:var(--red);">Alarmierung</span>
       <h2>Notruf auslösen</h2>
       <p>Melde einen Einsatz an die Zentrale. Der Alarm erscheint sofort im Einsatzprotokoll — bei verknüpftem Discord-Webhook zusätzlich im Einsatzkanal.</p>
-    </div></div>
+    </div>
+    <a id="voiceJoinBtn" href="#" target="_blank" rel="noopener" class="btn discord-btn" style="display:none;">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.3 4.9A19.8 19.8 0 0 0 15.6 3.4c-.2.4-.5.9-.7 1.3a18.3 18.3 0 0 0-5.6 0c-.2-.4-.4-.9-.7-1.3A19.7 19.7 0 0 0 3.9 4.9C1.2 8.9.5 12.8.8 16.7a19.9 19.9 0 0 0 6 3c.5-.6.9-1.3 1.3-2a13 13 0 0 1-2-1c.2-.1.3-.3.5-.4a14.2 14.2 0 0 0 12 0l.5.4a13 13 0 0 1-2 1c.4.7.8 1.4 1.3 2a19.8 19.8 0 0 0 6-3c.4-4.5-.7-8.4-3.1-11.8ZM8.7 14.3c-1 0-1.8-.9-1.8-2s.8-2 1.8-2 1.8.9 1.8 2-.8 2-1.8 2Zm6.6 0c-1 0-1.8-.9-1.8-2s.8-2 1.8-2 1.8.9 1.8 2-.8 2-1.8 2Z"/></svg>
+      Notrufzentrale beitreten
+    </a>
+    </div>
 
     <div class="lookup-panel notruf-panel">
       <form class="request-grid" onsubmit="return submitAlert(event)">
@@ -401,6 +407,26 @@
         <button onclick="runCitizenLookup()">Suchen</button>
       </div>
       <div id="citizenResult"></div>
+    </div>
+  </div>
+</section>
+
+<section id="anzeige">
+  <div class="wrap">
+    <div class="sec-head"><div class="sec-head-text">
+      <span class="eyebrow">Bürgerdienst</span>
+      <h2>Anzeige erstatten</h2>
+      <p>Melde einen Vorfall gegen eine Person. Die Anzeige wird von der Präsidiumsleitung geprüft und ggf. in die Bürgerakte übernommen.</p>
+    </div></div>
+    <div class="lookup-panel">
+      <form id="anzeigeForm" class="request-grid" onsubmit="return submitAnzeige(event)">
+        <div class="field"><label>Beschuldigte Person</label><input id="anBeschuldigter" type="text" placeholder="Name der Person" required></div>
+        <div class="field"><label>Dein Name (optional)</label><input id="anAnzeigender" type="text" placeholder="Anonym möglich"></div>
+        <div class="field wide"><label>Tatvorwurf</label><input id="anVorwurf" type="text" placeholder="z. B. Diebstahl, Betrug, Sachbeschädigung" required></div>
+        <div class="field wide"><label>Beschreibung</label><textarea id="anBeschreibung" placeholder="Was ist passiert? Wann und wo?"></textarea></div>
+        <div class="field field-btn wide"><button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;">Anzeige einreichen</button></div>
+      </form>
+      <div id="anzeigeResult"></div>
     </div>
   </div>
 </section>
@@ -570,6 +596,16 @@
           </div>
           <div class="lookup-hint">Rechtsklick auf euren Discord-Kanal → Kanal bearbeiten → Integrationen → Webhooks → Neuer Webhook → URL kopieren.</div>
         </div>
+        <div class="webhook-box" style="border-bottom:none;margin-bottom:0;padding-bottom:0;">
+          <div class="field">
+            <label>Discord-Sprachkanal-Link (Notrufzentrale)</label>
+            <div style="display:flex;gap:10px;">
+              <input id="voiceLinkUrl" type="text" placeholder="https://discord.com/channels/SERVER_ID/KANAL_ID">
+              <button type="button" class="btn btn-ghost" onclick="saveVoiceLink()">Speichern</button>
+            </div>
+          </div>
+          <div class="lookup-hint">Format: discord.com/channels/&lt;Server-ID&gt;/&lt;Kanal-ID&gt;. Öffnet Discord direkt am richtigen Kanal — beitreten selbst braucht noch einen letzten Klick, das erlaubt Discord aus Sicherheitsgründen nicht automatisch.</div>
+        </div>
       </div>
 
       <div class="admin-block">
@@ -578,16 +614,21 @@
       </div>
 
       <div class="admin-block">
+        <div class="admin-block-title">Anzeigen verwalten</div>
+        <div class="admin-table" id="anzeigenAdminTable"></div>
+      </div>
+
+      <div class="admin-block">
         <div class="admin-block-title">Ränge verwalten</div>
         <form class="request-grid" onsubmit="return adminAddRank(event)">
           <div class="field"><label>Rangbezeichnung</label><input id="rankName" type="text" placeholder="z. B. Polizeioberkommissar" required></div>
           <div class="field"><label>Beschreibung</label><input id="rankDesc" type="text" placeholder="z. B. Zwischen Kommissar und Hauptkommissar"></div>
-          <div class="field"><label>Position</label>
-            <select id="rankPos"><option value="top">Ganz oben (höchster Rang)</option><option value="bottom" selected>Ganz unten (niedrigster Rang)</option></select>
+          <div class="field"><label>Position (1 = höchster Rang)</label>
+            <input id="rankPos" type="number" min="1" placeholder="z. B. 3">
           </div>
           <div class="field field-btn"><button type="submit" class="btn btn-ghost" style="width:100%;justify-content:center;">Rang hinzufügen</button></div>
         </form>
-        <div class="lookup-hint" style="margin:14px 0 12px;">Reihenfolge = Hierarchie, von oben (höchster Rang) nach unten</div>
+        <div class="lookup-hint" style="margin:14px 0 12px;">Reihenfolge = Hierarchie, von oben (höchster Rang) nach unten. Leer lassen = ganz unten anfügen.</div>
         <div class="admin-table" id="rankAdminTable"></div>
       </div>
 
@@ -733,7 +774,7 @@
   }
 
   // in-memory cache of the shared dataset, refreshed after each mutation
-  let STATE = { officers:[], alerts:[], wanted:[], catalog:[], citizens:[], applications:[], press:[], plan:null, badgeCounter:4001, ranks:[] };
+  let STATE = { officers:[], alerts:[], wanted:[], catalog:[], citizens:[], applications:[], press:[], plan:null, badgeCounter:4001, ranks:[], anzeigen:[], discordVoiceLink:'' };
 
   function emptyPlan(){
     const plan = {};
@@ -754,9 +795,11 @@
       STATE.plan = data.plan || emptyPlan();
       STATE.badgeCounter = data.badgeCounter || 4001;
       STATE.ranks = (data.ranks && data.ranks.length) ? data.ranks : seedRanks;
+      STATE.anzeigen = data.anzeigen || [];
+      STATE.discordVoiceLink = data.discordVoiceLink || '';
     } catch(e){
       // Backend nicht erreichbar (z. B. lokal ohne Functions-Runtime getestet) -> Seed-Daten anzeigen
-      STATE = { officers:seedOfficers.slice(), alerts:[], wanted:seedWanted.slice(), catalog:seedCatalog.slice(), citizens:seedCitizens.slice(), applications:[], press:seedPress.slice(), plan:emptyPlan(), badgeCounter:4001, ranks:seedRanks.slice() };
+      STATE = { officers:seedOfficers.slice(), alerts:[], wanted:seedWanted.slice(), catalog:seedCatalog.slice(), citizens:seedCitizens.slice(), applications:[], press:seedPress.slice(), plan:emptyPlan(), badgeCounter:4001, ranks:seedRanks.slice(), anzeigen:[], discordVoiceLink:'' };
       console.warn('API nicht erreichbar — Demo-Daten werden angezeigt. Auf Cloudflare Pages mit eingerichteten Functions funktioniert das live.');
     }
     renderEverything();
@@ -773,6 +816,7 @@
     renderPress();
     renderRankList();
     renderUnits();
+    renderVoiceButton();
     if(document.getElementById('adminPanel').style.display !== 'none' && getToken()){
       renderOfficerTable();
       renderApplicationTable();
@@ -780,6 +824,7 @@
       renderCatalogAdmin();
       renderPlanTable('planAdminTable', true);
       renderRankAdmin();
+      renderAnzeigenAdmin();
     }
   }
 
@@ -832,20 +877,81 @@
     evt.preventDefault();
     const name = document.getElementById('rankName').value.trim();
     const desc = document.getElementById('rankDesc').value.trim();
-    const pos = document.getElementById('rankPos').value;
+    const posRaw = document.getElementById('rankPos').value.trim();
     if(!name) return false;
     if(!STATE.ranks || !STATE.ranks.length) STATE.ranks = seedRanks.slice();
-    if(pos === 'top') STATE.ranks.unshift({name, desc});
-    else STATE.ranks.push({name, desc});
+    let idx = posRaw ? (parseInt(posRaw,10) - 1) : STATE.ranks.length;
+    if(isNaN(idx) || idx < 0) idx = 0;
+    if(idx > STATE.ranks.length) idx = STATE.ranks.length;
+    STATE.ranks.splice(idx, 0, {name, desc});
     await apiSave('ranks', STATE.ranks);
     renderRankList(); renderRankAdmin(); populateAdminSelects(); evt.target.reset();
-    document.getElementById('rankPos').value = 'bottom';
     return false;
   }
   async function deleteRank(i){
     STATE.ranks.splice(i,1);
     await apiSave('ranks', STATE.ranks);
     renderRankList(); renderRankAdmin(); populateAdminSelects();
+  }
+
+  // ---------- Anzeigen (öffentlich einreichbar, Bearbeitung nur Admin) ----------
+  async function submitAnzeige(evt){
+    evt.preventDefault();
+    const beschuldigter = document.getElementById('anBeschuldigter').value.trim();
+    const anzeigender = document.getElementById('anAnzeigender').value.trim() || 'Anonym';
+    const vorwurf = document.getElementById('anVorwurf').value.trim();
+    const beschreibung = document.getElementById('anBeschreibung').value.trim();
+    if(!beschuldigter || !vorwurf) return false;
+    const btn = evt.target.querySelector('button[type=submit]');
+    btn.disabled = true; btn.textContent = 'Wird gesendet…';
+    try{
+      await fetch('/api/anzeige', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({beschuldigter, anzeigender, vorwurf, beschreibung}) });
+      document.getElementById('anzeigeResult').innerHTML = '<div class="result-card pending">Anzeige eingereicht gegen <b>'+beschuldigter+'</b>. Die Präsidiumsleitung prüft den Vorgang.</div>';
+      evt.target.reset();
+    } catch(e){
+      document.getElementById('anzeigeResult').innerHTML = '<div class="result-card" style="border-color:rgba(200,32,46,.4);">Anzeige konnte nicht gesendet werden — Backend nicht erreichbar.</div>';
+    }
+    btn.disabled = false; btn.textContent = 'Anzeige einreichen';
+    return false;
+  }
+  function renderAnzeigenAdmin(){
+    const table = document.getElementById('anzeigenAdminTable');
+    if(!table) return;
+    const list = STATE.anzeigen || [];
+    if(list.length===0){ table.innerHTML = '<div class="log-empty">Noch keine Anzeigen eingegangen.</div>'; return; }
+    const statusLabel = {offen:'offen', progress:'in Bearbeitung', done:'abgeschlossen'};
+    table.innerHTML = '<div class="admin-row header alert-row"><div>Beschuldigt</div><div>Vorwurf</div><div>Anzeigende Person</div><div>Datum</div><div>Status</div><div></div></div>' +
+      list.map((a,i)=>'<div class="admin-row alert-row"><div>'+a.beschuldigter+'</div><div>'+a.vorwurf+'</div><div>'+a.anzeigender+'</div><div style="font-family:var(--font-mono);font-size:11.5px;color:var(--text-2);">'+a.date+'</div><div><button class="status-toggle '+(a.status==='offen'?'open':a.status==='progress'?'progress':'done')+'" onclick="cycleAnzeigeStatus('+i+')">'+statusLabel[a.status]+'</button></div><button class="del-btn" onclick="deleteAnzeige('+i+')">×</button></div>').join('');
+  }
+  async function cycleAnzeigeStatus(i){
+    const map = {offen:'progress', progress:'done', done:'offen'};
+    if(!STATE.anzeigen[i]) return;
+    STATE.anzeigen[i].status = map[STATE.anzeigen[i].status];
+    await apiSave('anzeigen', STATE.anzeigen);
+    renderAnzeigenAdmin();
+  }
+  async function deleteAnzeige(i){
+    STATE.anzeigen.splice(i,1);
+    await apiSave('anzeigen', STATE.anzeigen);
+    renderAnzeigenAdmin();
+  }
+
+  // ---------- Discord-Sprachkanal-Link ----------
+  const DEFAULT_DISCORD_VOICE_LINK = "https://discord.com/channels/1523752454779437056/1532378628506128485";
+  function renderVoiceButton(){
+    const link = STATE.discordVoiceLink || DEFAULT_DISCORD_VOICE_LINK;
+    const btn = document.getElementById('voiceJoinBtn');
+    if(!btn) return;
+    if(link){ btn.href = link; btn.style.display = 'inline-flex'; }
+    else { btn.style.display = 'none'; }
+    const input = document.getElementById('voiceLinkUrl');
+    if(input) input.value = STATE.discordVoiceLink || '';
+  }
+  async function saveVoiceLink(){
+    const val = document.getElementById('voiceLinkUrl').value.trim();
+    STATE.discordVoiceLink = val;
+    await apiSave('discordVoiceLink', val);
+    renderVoiceButton();
   }
 
   const units = [
@@ -1162,7 +1268,9 @@
         renderCatalogAdmin();
         renderPlanTable('planAdminTable', true);
         renderRankAdmin();
+        renderAnzeigenAdmin();
         renderWebhookState();
+        renderVoiceButton();
       } else {
         document.getElementById('adminPass').style.borderColor = 'var(--red)';
       }
@@ -1237,6 +1345,8 @@
       STATE.plan = data.plan || STATE.plan;
       STATE.badgeCounter = data.badgeCounter || STATE.badgeCounter;
       STATE.ranks = (data.ranks && data.ranks.length) ? data.ranks : STATE.ranks;
+      STATE.anzeigen = data.anzeigen || STATE.anzeigen;
+      STATE.discordVoiceLink = (data.discordVoiceLink !== undefined && data.discordVoiceLink !== null) ? data.discordVoiceLink : STATE.discordVoiceLink;
     } catch(e){ return; } // Backend kurz nicht erreichbar -> einfach beim nächsten Intervall erneut versuchen
 
     refreshStats();
@@ -1247,6 +1357,7 @@
     renderPlanTable('planTable', false);
     renderRankList();
     renderUnits();
+    renderVoiceButton();
 
     const adminOpen = getToken() && document.getElementById('adminPanel').style.display !== 'none';
     if(adminOpen){
@@ -1255,6 +1366,7 @@
       renderWantedAdmin();
       renderCatalogAdmin();
       renderRankAdmin();
+      renderAnzeigenAdmin();
       // Der editierbare Dienstplan (planAdminTable) wird beim Polling bewusst NICHT
       // neu gerendert, damit laufende Eingaben eines Admins nicht überschrieben werden.
     }
