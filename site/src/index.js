@@ -9,6 +9,7 @@
 const DATA_KEYS = [
   "officers", "alerts", "wanted", "catalog", "citizens",
   "applications", "press", "plan", "badgeCounter", "ranks",
+  "anzeigen", "discordVoiceLink",
 ];
 
 export default {
@@ -23,6 +24,7 @@ export default {
       if (path === "/api/save" && method === "POST") return await handleSave(request, env);
       if (path === "/api/notruf" && method === "POST") return await handleNotruf(request, env);
       if (path === "/api/apply" && method === "POST") return await handleApply(request, env);
+      if (path === "/api/anzeige" && method === "POST") return await handleAnzeige(request, env);
     } catch (e) {
       return json({ ok: false, error: "server_error" }, 500);
     }
@@ -167,5 +169,33 @@ async function handleApply(request, env) {
     status: "pending", date: new Date().toLocaleDateString("de-DE"),
   });
   await env.PH_KV.put("data:applications", JSON.stringify(list));
+  return json({ ok: true });
+}
+
+// ---------- /api/anzeige (öffentlich, nur anhängend) ----------
+// Bürger können eine Anzeige gegen jemanden erstatten. Auch hier: nur
+// anhängend möglich, Einsehen/Bearbeiten nur im Admin-Bereich (mit Token).
+async function handleAnzeige(request, env) {
+  let body;
+  try {
+    body = await request.json();
+  } catch (e) {
+    return json({ ok: false, error: "invalid_body" }, 400);
+  }
+  const beschuldigter = (body.beschuldigter || "").toString().slice(0, 80);
+  const anzeigender = (body.anzeigender || "Anonym").toString().slice(0, 80);
+  const vorwurf = (body.vorwurf || "").toString().slice(0, 100);
+  const beschreibung = (body.beschreibung || "").toString().slice(0, 800);
+  if (!beschuldigter || !vorwurf) return json({ ok: false, error: "missing_fields" }, 400);
+
+  const raw = await env.PH_KV.get("data:anzeigen");
+  const list = raw ? JSON.parse(raw) : [];
+  list.unshift({
+    id: Date.now(),
+    beschuldigter, anzeigender, vorwurf, beschreibung,
+    status: "offen",
+    date: new Date().toLocaleDateString("de-DE"),
+  });
+  await env.PH_KV.put("data:anzeigen", JSON.stringify(list));
   return json({ ok: true });
 }
